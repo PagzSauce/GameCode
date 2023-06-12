@@ -1,0 +1,37 @@
+using System.Collections;
+using System.Collections.Generic;
+using UnityEngine;
+
+public class WaypointFollower : MonoBehaviour
+{
+    [SerializeField] private GameObject[] waypoints;
+ 
+    private int currentWaypointIndex = 0;
+
+    [SerializeField] private float speed = 3f;
+
+    private void Update()
+    {
+        if(Vector2.Distance(waypoints[currentWaypointIndex].transform.position,transform.position) < .1f)
+        {
+            currentWaypointIndex++;
+            if(currentWaypointIndex >= waypoints.Length)
+            {
+                transform.position = waypoints[0].transform.position;
+                currentWaypointIndex = 0;
+                //Debug.Log(transform.name);
+            }
+
+        }
+
+       
+
+        //Debug.Log(waypoints.Length);
+        if(transform.position != waypoints[waypoints.Length - 1].transform.position)
+        { 
+            transform.position = Vector2.MoveTowards(transform.position, waypoints[currentWaypointIndex].transform.position, Time.deltaTime * speed);
+        }
+
+        
+    }
+}
